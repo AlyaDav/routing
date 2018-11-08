@@ -1,0 +1,14 @@
+<h1> market</h1>
+<button (click)="getMyItems(username)">only my items</button>
+<button (click)="getItems()">all items</button>
+<div *ngFor="let item of items">
+    <h3 >name_item {{item.title}} price_item {{item.price}} username {{item.username}}</h3>
+    <button *ngIf="item.username!==username" (click)="onBuy(item)">BUY</button>
+    <label *ngIf="item.username==username">MY ITEM </label>
+</div>
+
+
+<nav>
+    <button routerLink="/authentication/signIn/{{username}}"> go home</button>
+    
+</nav>

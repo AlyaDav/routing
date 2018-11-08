@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { MarketComponent } from './market/market.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { MarketComponent } from './components/market/market.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
+import { NewItemComponent } from './new-item/new-item.component';
+import { FormsModule, Validators } from '@angular/forms';
 
-
+import { ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,15 @@ import { RegistrationComponent } from './registration/registration.component';
     LoginComponent,
     HomeComponent,
     MarketComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NewItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

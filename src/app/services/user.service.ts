@@ -14,30 +14,44 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + 'user/all');
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(this.url + 'user/all');
   }
-  getByUsers(username: string): Observable<User> {
-    return this.http.get<User>(this.url + 'user/' + username);
+  getByUsers(username: string): Observable<any> {
+    return this.http.get<any>(this.url + 'user/?username=' + username); // конкретный user
+  }
+
+
+
+
+  getAllItems(): Observable<any> {
+    return this.http.get<any>(this.url + 'item/all');
+  }
+  getByItems(userId: string): Observable<any> {
+    return this.http.get<any>(this.url + 'item/?userId=' + userId);
   }
 
 
 
+  register(username: string, password: String, email: string) {
+    
+    return this.http.post(this.url + 'authentication/signUp', { username, password, email });
+  }
+  entrance(username: string, password: String) {
+    return this.http.post(this.url + 'authentication/signIn ', { username, password });
+  }
 
-  getAllItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.url + 'item/all');
-  }
-  getByItems(_id: string): Observable<Item> {
-    return this.http.get<Item>(this.url + 'item/' + _id);
+
+  createItem(title: string, price: number, about: string, username: string):Observable<Item> {
+   
+    return this.http.post<Item>(this.url + 'item/sell', {title, price, about, username});
   }
 
+  buyItem(itemId: String, sellerId: String, buyerId: String){
+    console.log('buyItem')
+    return this.http.post(this.url + 'item/buy', {itemId, sellerId, buyerId});
 
-// ?
-  register(user: User, password: String){
-    return this.http.post(this.url + 'authentication/signUp', user);
   }
-  entrance(user: User, password: String){
-    return this.http.post(this.url + 'authentication/signIn ', user);
-  }
+
 
 }

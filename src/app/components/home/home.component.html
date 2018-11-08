@@ -1,0 +1,14 @@
+<h4>recording</h4>
+<form>
+<div>
+    <h1> name {{user.username}}</h1>
+    <h1> email {{user.email}}</h1>
+    <h1>money {{user.coin}}</h1>
+    <div *ngIf="items">
+    <h3  *ngFor="let item of items">name_item {{item.title}} price_item {{item.price}} about_item {{item.about}}</h3></div>
+    <button  routerLink="/item/sell" [queryParams]="{'username':user.username}" >Add and byu new item</button>
+    <nav>
+      <button routerLink="/item/all" [queryParams]="{'username':user.username,'userId':user._id }" >go to market</button>
+    </nav>
+    
+</div> </form>

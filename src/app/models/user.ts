@@ -1,6 +1,7 @@
 export class User {
-    id: number;
+    _id: string;
     username: string;
+    email: string;
     password: string;
     coin: number;
     fio: string;
@@ -8,5 +9,5 @@ export class User {
     sex: string;
     role:string;
     delered:boolean;
-    deletedAt: Date;
+    
 }
