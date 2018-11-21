@@ -1,0 +1,22 @@
+<h2 class="center">Add new item</h2>
+
+<form class="form-group" [formGroup]="newItemForm" (ngSubmit)="onCreateItem()">
+
+  <label>Title
+    <input type="text" formControlName="title">
+  </label>
+
+  <label>Price
+    <input type="number" formControlName="price">
+  </label>
+
+
+  <label>About
+    <input type="text" formControlName="about">
+  </label>
+
+  <button class="btn-primary" type="submit" [disabled]="newItemForm.invalid">
+    Add new component
+  </button>
+
+</form>

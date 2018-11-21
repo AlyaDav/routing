@@ -1,5 +1,4 @@
 .btn-primary{
-    
     width: 240px;
     box-sizing: border-box;
     margin: 0.5rem auto;
@@ -30,16 +29,11 @@
     color: red;
     border: none;
 }
+
 .center{
     display: block;
     text-align:center;
-    
-  
 }
-.ng-valid[required], .ng-valid.required  {
-    border-left: 5px solid #42A948; /* green */
-  }
-  
   .ng-invalid:not(form)  {
-    border-left: 5px solid #a94442; /* red */
+    border-left: 15px solid #a94442; /* red */
   }

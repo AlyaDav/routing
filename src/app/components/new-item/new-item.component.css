@@ -1,0 +1,39 @@
+.btn-primary{
+    
+    width: 240px;
+    box-sizing: border-box;
+    margin: 0.5rem auto;
+    padding: 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    border: none;
+    background: #99154e;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem #6c0f37;
+    outline: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    cursor: pointer;}
+
+.form-group{
+    width: 240px;
+    box-sizing: border-box;
+    margin: 0.5rem auto;
+    padding: 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: red;
+    border: none;
+}
+.center{
+    display: block;
+    text-align:center;
+}
+  .ng-invalid:not(form)  {
+    border-left: 15px solid #a94442; /* red */
+  }

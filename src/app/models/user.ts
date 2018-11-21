@@ -9,5 +9,10 @@ export class User {
     sex: string;
     role:string;
     delered:boolean;
-    
+
+    constructor (username, password, email?:string){
+        this.username=username;
+        this.password=password;
+        this.email=email;
+    }
 }

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router  } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { log } from 'util';
-
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,36 +10,32 @@ import { log } from 'util';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private userService: UserService,
+  constructor(
     private router: Router,
-    )    { }
+    private authService: AuthService,
+  ) { }
 
-    usernameFormControl = new FormControl('',
-    [ Validators.required]);
+  loginForm = new FormGroup({
+    userName: new FormControl('',
+      [Validators.required]),
+    password: new FormControl('',
+      [Validators.required])
+  });
 
-    passwordFormControl = new FormControl('',
-    [ Validators.required]);
-
-    loginForm = new FormGroup({
-      userName: this.usernameFormControl,
-      password: this.passwordFormControl
-    });
   ngOnInit() {
-
+    this.authService.logout();
   }
 
   onSubmit() {
-    console.log(this.loginForm);
-let username =this.loginForm.value.userName
-let password =this.loginForm.value.password
-    console.log(username + '  ' + password);
-    this.userService.entrance(username, password)
+    let username = this.loginForm.value.userName
+    let password = this.loginForm.value.password
+    this.authService.login(username, password)
       .subscribe(
         data => {
-          console.log('12312')
-          this.router.navigate(['/authentication/signIn/',username])}
+          if (data['success']) this.router.navigate(['/authentication/signIn/', username])
+          else alert(data['error'])
+          if (data['error']['errmsg']) alert(data['error']['errmsg'])
+        }
       )
-  
-
-}
+  }
 }

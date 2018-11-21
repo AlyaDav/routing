@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { ActivatedRoute, ParamMap, Router} from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { Item } from 'src/app/models/item';
+import { Subscription } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -11,44 +11,40 @@ import { Item } from 'src/app/models/item';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+
+export class HomeComponent implements OnInit, OnDestroy {
   user: User;
+  subscription: Subscription;
+  items: Item[];
 
-  items:Item[];
-  
-
-  constructor(private userService: UserService,
-              private route:ActivatedRoute,
-              private router: Router
-              ) { }
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
-this.getUser();
+    this.getUser();
+  }
 
-}
+  getUser(): void {
+    this.subscription = this.route.params.subscribe(
+      params => {
+        this.apiService.getUser(params.username).subscribe(
+          data => {
+            this.user = data.data;
+            this.getItem();
+          });
+      });
+  }
 
-getUser():void {
- 
-  console.log();
-  this.route.params.subscribe(params=>{
-    this.userService.getByUsers(params.username).subscribe(data =>{
-    this.user=data.data;
-    this.getItem();
-    console.log(data);
-    })
-    
-  })
-}
+  getItem() {
+    this.apiService.getByItems(this.user._id).subscribe(
+      data => this.items = data.data
+    );
+  }
 
-getItem(){
-    this.userService.getByItems(this.user._id).subscribe(data =>{
-    this.items=data.data
-      console.log(this.items);
-      
-    })
-}
-
-
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
 

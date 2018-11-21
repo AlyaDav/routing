@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from 'src/app/models/item';
-import { UserService } from 'src/app/services/user.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
-
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,48 +15,46 @@ export class MarketComponent implements OnInit {
   items: Item[];
   username: string;
   userId: string;
+  subscription: Subscription;
 
-  constructor(private userService: UserService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.username = params['username'];
-      this.userId = params['userId'];
-      console.log(params)
-    })
+    this.subscription = this.route.queryParams.subscribe(
+      params => {
+        this.username = params['username'];
+        this.userId = params['userId'];
+      });
 
     this.getItems();
   }
 
 
   getItems() {
-    this.userService.getAllItems()
+    this.apiService.getAllItems()
       .subscribe(data => {
         this.items = data.data
       });
   }
 
   onBuy(item: Item) {
-
-    this.userService.buyItem(item._id, item.sellerId, this.userId)
+    this.apiService.buyItem(item._id, item.sellerId, this.userId)
       .subscribe(data => {
-        console.log(data);
+        if (data['success']) alert(' You buy Item')
+        else { alert(data['error']) }
       })
   }
 
-  getMyItems(username:string){
-    this.items= this.items.filter(data => {
-      console.log(data); 
-      console.log(username);
-      return  data.username==username;
-       });
+  getMyItems(username: string) {
+    this.items = this.items.filter(data => {
+      return data.username === username;
+    });
+  }
 
-    // this.userService.getAllItems()
-    //   .subscribe(data => {
-    //     this.items = data.data
-    //     .pipe(filter(data => this.username == username))
-    //   });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
